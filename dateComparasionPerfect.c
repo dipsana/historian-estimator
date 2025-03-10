@@ -1,8 +1,9 @@
 // Program to compare two dates
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
-// Structure data type to store a date
+// Date Structure
 typedef struct Date
 {
     int day;
@@ -14,62 +15,64 @@ typedef struct Date
 int isLeapYear(int year);
 int daysInMonth(int month, int year);
 int daysinYear(int year);
-int calculateDurationDays(Date high, Date low);
 int compareDates(Date date1, Date date2, Date *high, Date *low);
+long calculateDurationDays(Date high, Date low);
 Date calculateDuration(Date high, Date low);
 Date initialize();
+char continuation();
 
 int main()
 {
-    Date date1, date2; // To store two dates
-    Date high, low;    // To store high and low months
-    Date dateDiff;     // To store difference between two dates
+    // Continue on yes
+    do
+    {
+        Date date1, date2, high, low, dateDiff; // Store two dates, high and low dates and the difference between two dates
 
-    printf("\nEnter the two dates to compare in 'dd mm yyyy' format.\n");
-    // Input date 1
-    printf("Enter Date 1 (dd mm yyyy): ");
-    date1 = initialize();
+        printf("\nEnter the two dates to compare in 'dd mm yyyy' format.\n");
+        // I/p date 1
+        printf("Enter Date 1 (dd mm yyyy): ");
+        date1 = initialize();
 
-    // Input date 2
-    printf("Enter Date 2 (dd mm yyyy): ");
-    date2 = initialize();
+        // I/p date 2
+        printf("Enter Date 2 (dd mm yyyy): ");
+        date2 = initialize();
 
-    if (compareDates(date1, date2, &high, &low) == -1) // Store high and low months
-        return 0;                                      // Exit program if dates are equal
+        if (compareDates(date1, date2, &high, &low) == -1) // Store high and low dates
+            return 0;                                      // Exit if dates are equal
 
-    // Output 1
-    printf("\nHigh Date: %02d/%02d/%04d.\nLow Date: %02d/%02d/%04d.\n", high.day, high.month, high.year, low.day, low.month, low.year);
-    printf("\n*******************************************\n");
-    printf("Difference between the two dates: %d days.\n", calculateDurationDays(high, low));
+        // O/p 1: Days
+        long days = calculateDurationDays(high, low);
+        printf("\nHigh Date: %02d/%02d/%04d.\nLow Date: %02d/%02d/%04d.\n", high.day, high.month, high.year, low.day, low.month, low.year);
+        printf("\n*******************************************\n");
+        printf("Difference between the two dates: %d day%s.\n", days, (days > 1) ? "s" : "");
 
-    // Output 2
-    dateDiff = calculateDuration(high, low);
-    printf("Difference between the two dates:");
-    if (dateDiff.year > 0)
-        (dateDiff.year > 1) ? printf(" %d years", dateDiff.year) : printf(" %d year", dateDiff.year);
+        // O/p 2: Date Difference
+        dateDiff = calculateDuration(high, low);
+        printf("Difference between the two dates:");
+        if (dateDiff.year > 0)
+            printf(" %d year%s", dateDiff.year, (dateDiff.year > 1) ? "s" : "");
 
-    if (dateDiff.month > 0)
-        (dateDiff.month > 1) ? printf(" %d months", dateDiff.month) : printf(" %d month", dateDiff.month);
+        if (dateDiff.month > 0)
+            printf(" %d month%s", dateDiff.month, (dateDiff.month > 1) ? "s" : "");
 
-    if (dateDiff.day > 0)
-        (dateDiff.day > 1) ? printf(" %d days", dateDiff.day) : printf(" %d day", dateDiff.day);
+        if (dateDiff.day > 0)
+            printf(" %d day%s.\n", dateDiff.day, (dateDiff.day > 1) ? "s" : "");
 
-    printf(".\n");
+    } while (continuation() == 'y');
+    printf("\nExiting the program...\n");
     return 0;
 }
 
 // Function Descriptions:
-// To initialize a date error free
+// Initialize a date error free
 Date initialize()
 {
     Date date;
-    // Initialize Error Free
     while (scanf("%02d %02d %04d", &date.day, &date.month, &date.year) != 3)
     {
         // Clear input buffer
         int ch;
-        while ((ch = getchar()) != '\n' && ch != EOF)
-            ;
+        while ((ch = getchar()) != '\n' && ch != EOF);
         date = (Date){0};                                                // Reset dates
         printf("\nInvalid Entry! Please enter in dd mm yyyy format!\n"); // Error Statement
     }
@@ -83,7 +86,7 @@ Date initialize()
     return date;
 }
 
-// To compare two dates and identify which is higher or lower
+// Identify high and low dates
 int compareDates(Date date1, Date date2, Date *high, Date *low)
 {
     if (date1.year > date2.year)
@@ -124,13 +127,13 @@ int compareDates(Date date1, Date date2, Date *high, Date *low)
     return 0;
 }
 
-// To check if a year is a leap year
+// Check if a year is a leap year
 int isLeapYear(int year)
 {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
-// To calculate the no. of days of a given year
+// Calculate the no. of days of a given year
 int daysinYear(int year)
 {
     if (isLeapYear(year))
@@ -140,7 +143,7 @@ int daysinYear(int year)
     return 365;
 }
 
-// To calculate the no. of days in a given month of a given year
+// Calculate the no. of days in a given month of a given year
 int daysInMonth(int month, int year)
 {
     int days[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -152,13 +155,13 @@ int daysInMonth(int month, int year)
     return days[month];
 }
 
-// To calculate the difference between two dates
+// Difference between two dates
 Date calculateDuration(Date high, Date low)
 {
     Date dateDiff = {0}; // Set dateDiff parameters to 0
-    int temp;            // To store temp values
+    int temp;            // Store temp values
 
-    // Counting the no. of days
+    // Count day difference
     temp = daysInMonth(low.month, low.year);
     dateDiff.day = temp - low.day + high.day;
     if (dateDiff.day >= temp)
@@ -166,32 +169,32 @@ Date calculateDuration(Date high, Date low)
         dateDiff.month++;
         dateDiff.day -= temp;
     }
-    low.month++; // NOTE: In total only one month is gone not two.
+    low.month++; // NOTE: Only one month is adjusted not two.
 
-    // Counting the no. of months
+    // Count month difference
     dateDiff.month += 12 - low.month + high.month;
-    low.year++; // NOTE: In total only one year is gone not two.
+    low.year++; // NOTE: Only one year is adjusted not two.
 
     // Adjusting months and years if months exceed 12
     dateDiff.year += dateDiff.month / 12;
     dateDiff.month %= 12;
 
-    // Counting the no. of years
+    // Count year difference
     dateDiff.year += high.year - low.year;
     return dateDiff;
 }
 
-// To calculate the difference in days between two dates
-int calculateDurationDays(Date high, Date low)
+// Difference between two dates in days
+long calculateDurationDays(Date high, Date low)
 {
-    int days = 0;
+    long days = 0;
 
-    // Equalizing the day parameter of both the dates. In simple terms counting days in dd.
+    // Equalizing the day parameter of both the dates. In simple terms, days in dd2 - dd1 accurately.
     days = daysInMonth(low.month, low.year) - low.day + high.day;
     low.month++;
     high.month--;
 
-    // Equalizing the month parameter of both the dates. In simple terms counting days in mm.
+    // Equalizing the month parameter of both the dates. In simple terms, days in mm2 - mm1 accurately.
     while (low.month < 13)
     {
         days += daysInMonth(low.month, low.year);
@@ -204,11 +207,23 @@ int calculateDurationDays(Date high, Date low)
     }
     low.year++;
 
-    // Finally calculating the leftover days via year difference of both the dates. In simple terms counting days in yyyy.
+    // Calculate the leftover days via year difference of both the dates. In simple terms, days in yyyy2 - yyyy1 accurately.
     while (low.year < high.year)
     {
         days += daysinYear(low.year++);
     }
-
     return days;
+}
+
+// Re-compare? (Y/N) prompt
+char continuation()
+{
+    char choice = 'y';
+    do
+    {
+        printf("\nDo you want to compare another date (y/n)?: ");
+        scanf(" %c", &choice);
+        choice = tolower(choice);
+    } while (choice != 'y' && choice != 'n');
+    return choice;
 }
