@@ -51,7 +51,7 @@ gcc -o bin/historian_estimator src/main.c
 
 ## 📁 Repository Structure [Clickable]
 
-/
+/  
 ├─ 📁 [bin](./bin)  
 │   └─ 📄 [historian_estimator.exe](./bin/historian_estimator.exe)  
 ├─ 📁 [docs](./docs)  
@@ -136,4 +136,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 **Versioning:** This project adheres to [Semantic Versioning 2.0.0](https://semver.org/).  
 **Changelog Format:** Based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
 
