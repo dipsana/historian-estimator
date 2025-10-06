@@ -36,16 +36,30 @@ This version serves as the **base release (v1.0.0)** following [Semantic Version
 ## 🧱 Installation & Compilation
 
 ```bash
-# Clone this repository
-git clone https://github.com/dipsana/historians-estimator.git
-cd historians-estimator
+# Clone the repository
+git clone https://github.com/dipsana/historian-estimator.git
+cd historian-estimator
 
-# Compile using GCC
-gcc -o historian_estimator main.c
+# Compile source code to bin folder
+gcc -o bin/historian_estimator src/main.c
 
 # Run the executable
-./historian_estimator
+./bin/historian_estimator
 ```
+
+---
+
+## 📁 Repository Structure [Clickable]
+
+├─ 📁 [bin](./bin)  
+│   └─ 📄 [historian_estimator.exe](./bin/historian_estimator.exe)  
+├─ 📁 [docs](./docs)  
+│   └─ 📄 [SRS.pdf](./docs/SRS.pdf)  
+├─ 📁 [src](./src)  
+│   └─ 📄 [main.c](./src/main.c)  
+├─ 📄 [README.md](./README.md)  
+├─ 📄 [LICENSE](./LICENSE)  
+└─ 📄 [CHANGELOG.md](./CHANGELOG.md)
 
 ---
 
