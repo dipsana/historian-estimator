@@ -14,6 +14,14 @@ All notable changes to Historian's Estimator will be documented in this file.
 - Dual output format (days and years/months/days)
 - Input validation and error handling
 - AD notation support for historical dates
+- Added project structure and documentation files:
+
+  - `/bin/historian_estimator.exe`
+  - `/src/main.c`
+  - `/docs/srs.pdf`
+  - `CHANGELOG.md`
+  - `LICENSE`
+  - `README.md`
 
 ### Technical
 
@@ -25,3 +33,4 @@ All notable changes to Historian's Estimator will be documented in this file.
 
 **Versioning:** This project adheres to [Semantic Versioning 2.0.0](https://semver.org/).  
 **Changelog Format:** Based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
